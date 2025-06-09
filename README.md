@@ -1,82 +1,93 @@
-# Turborepo starter
+# Turborepo Boilerplate
 
-This Turborepo starter is maintained by the Turborepo core team.
+Eine Monorepo-Vorlage basierend auf pnpm, Turbo und Next.js für skalierbare Full-Stack-Projekte.
 
-## Using this example
+## Übersicht
+Dieses Monorepo nutzt [pnpm](https://pnpm.io/), [Turborepo](https://turborepo.org/) und [Next.js](https://nextjs.org/) als Boilerplate für mehrere Pakete und Anwendungen:
+- **apps/web**: Next.js Beispiel-Applikation
+- **packages/eslint-config**: Gemeinsame ESLint-Konfiguration
+- **packages/typescript-config**: TS-Config Presets
+- **packages/ui**: Wiederverwendbare UI-Komponenten
 
-Run the following command:
+## Voraussetzungen
+- Node.js >= 18 (mit [pnpm](https://pnpm.io/) global installiert)
+- pnpm >= 8
+- Turbo-CLI (wird per pnpm installiert)
+- Git
+- Optional: Docker (für Container-Builds)
 
-```sh
-npx create-turbo@latest
+## Erste Schritte
+1. Repository klonen:
+   ```bash
+   git clone <repo-url> turborepo-boilerplate
+   cd turborepo-boilerplate
+   ```
+2. Abhängigkeiten installieren:
+   ```bash
+   pnpm install
+   ```
+
+## Lokale Entwicklung
+### Alle Anwendungen parallel starten
+```bash
+npx turbo dev
 ```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
+### Nur die Web-App starten
+```bash
+cd apps/web
 pnpm dev
 ```
+Die Next.js-Anwendung läuft standardmäßig auf http://localhost:3000.
 
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
+## Build & Produktion
+### Produktion lokal bauen
+```bash
+npx turbo build
 ```
-cd my-turborepo
-npx turbo login
+### Docker-Image erstellen
+```bash
+# Ersetze <PROJECT> durch 'web' oder dein App-Verzeichnis
+docker build \
+  --build-arg PROJECT=<PROJECT> \
+  -t turborepo-boilerplate:<PROJECT> .
+```
+### Container starten
+```bash
+docker run -p 8080:8080 \
+  --env PROJECT=<PROJECT> \
+  turborepo-boilerplate:<PROJECT>
+```
+**Hinweis:** Du kannst den Host-Port beliebig wählen, indem du ihn im `-p`-Parameter vor dem Container-Port angibst (z. B. `-p 3001:8080`). Die Anwendung liest den Container-Port aus der Umgebungsvariable `PORT`, sodass die Weiterleitung automatisch funktioniert.
+
+## Projektstruktur
+```
+/
+├─ apps/
+│  └─ web/                # Next.js Anwendung
+├─ packages/
+│  ├─ eslint-config/      # ESLint-Konfiguration
+│  ├─ typescript-config/  # TypeScript-Presets
+│  └─ ui/                 # UI-Komponenten
+├─ turbo.json             # Turbo-Pipeline-Konfiguration
+├─ pnpm-workspace.yaml
+├─ package.json
+└─ Dockerfile
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
+## Linting & Formatierung
+```bash
+pnpm lint       # ESLint prüfen
+pnpm lint:fix   # Autofix anwenden
+pnpm format     # Code mit Prettier formatieren
 ```
-npx turbo link
-```
 
-## Useful Links
+## Weitere Informationen
+- Details zu ESLint-Konfiguration: `packages/eslint-config/README.md`
+- TypeScript-Presets: `packages/typescript-config/README.md`
+- Web-Anwendung: `apps/web/README.md`
 
-Learn more about the power of Turborepo:
+## Mitwirken
+Beiträge sind willkommen! Eröffne gern ein Issue oder Pull Request.
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+## Lizenz
+MIT
