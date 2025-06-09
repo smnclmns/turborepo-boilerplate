@@ -19,7 +19,7 @@ Dieses Monorepo nutzt [pnpm](https://pnpm.io/), [Turborepo](https://turborepo.or
 ## Erste Schritte
 1. Repository klonen:
    ```bash
-   git clone <repo-url> turborepo-boilerplate
+   git clone https://github.com/smnclmns/turborepo-boilerplate.git
    cd turborepo-boilerplate
    ```
 2. Abhängigkeiten installieren:
@@ -30,20 +30,9 @@ Dieses Monorepo nutzt [pnpm](https://pnpm.io/), [Turborepo](https://turborepo.or
 ## Lokale Entwicklung
 ### Alle Anwendungen parallel starten
 ```bash
-npx turbo dev
-```
-### Nur die Web-App starten
-```bash
-cd apps/web
 pnpm dev
 ```
-Die Next.js-Anwendung läuft standardmäßig auf http://localhost:3000.
 
-## Build & Produktion
-### Produktion lokal bauen
-```bash
-npx turbo build
-```
 ### Docker-Image erstellen
 ```bash
 # Ersetze <PROJECT> durch 'web' oder dein App-Verzeichnis
