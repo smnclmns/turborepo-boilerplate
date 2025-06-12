@@ -1,10 +1,10 @@
 {
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@repo/supabase/*": ["./src/*"]
-    },
+    "sourceMap": true,
+    "noEmit": false,
+    "baseUrl": "src",
+    "outDir": "dist",
   },
   "include": ["."],
   "exclude": ["node_modules", "dist"]}
